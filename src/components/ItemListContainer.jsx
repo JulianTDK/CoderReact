@@ -1,10 +1,12 @@
-function ItemListContainer () {
+function ItemListContainer ({greeting}) {
 
-
+    
 
     return(
-        1
-    )
+        <h1>{greeting}</h1>
+        )
+
+        
 }
 
 export default ItemListContainer

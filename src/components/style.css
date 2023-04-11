@@ -34,7 +34,13 @@
     
     
 }
+.shop-container  {
 
+   display: flex;
+   background-color: aliceblue;
+   padding: 3px;
+   
+}
 .shop-container img {
 
     width: 35px;

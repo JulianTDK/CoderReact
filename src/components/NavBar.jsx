@@ -17,6 +17,7 @@ function NavBar () {
                     <li><a href="#">Mi Carrito</a></li>
                     <li><a href="#">Ayuda</a></li>
                     <li><a href="#">Mi Cuenta</a></li>
+                    
                 </ul>
 
                
