@@ -1,7 +1,6 @@
 import React from 'react';
 import CartWidget from './CartWidget';
-import ItemListContainer from './ItemListContainer';
-import { Link } from 'react-router-dom';
+import { Link, NavLink, useParams } from "react-router-dom"
 import './Navbar.css';
 
 
@@ -28,23 +27,19 @@ function Navbar() {
         <div className="collapse navbar-collapse" id="navbarNav">
           <ul className="navbar-nav">
             <li className="nav-item">
-              <Link className="nav-link" to="/category/1">
-                Productos
-              </Link>
+            <NavLink to="/categoria/1" className={ ({isActive})=> isActive ? 'btn btn-primary' : 'btn btn-outline-primary'} >Cd</NavLink>
+            </li>
+            <li className='nav-item'>
+            <NavLink to='/categoria/2' className={ ({isActive})=> isActive ? 'btn btn-primary' : 'btn btn-outline-primary'}>Vinilos</NavLink>
             </li>
             <li className="nav-item">
-              <Link className="nav-link" to="/cart">
+              <Link className="nav-link" to="#">
                 <CartWidget />
               </Link>
             </li>
-            <li className="nav-item">
-              <Link className="nav-link" to="/item/:id">
-                Item
-                
-              </Link>
-           
-            </li>
+
           </ul>
+          
         </div>
       </div>
     </nav>
