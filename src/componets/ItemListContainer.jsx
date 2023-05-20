@@ -2,41 +2,63 @@ import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import { useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
-
 import ItemList from "./ItemList";
-import { mFetch } from "./mFetch";
+import {collection,getDocs, getFirestore,  query,  where,} from "firebase/firestore";
 
-export function ItemListContainer() {
-  const [productos, setProductos] = useState([])
-  const [isLoading, setIsLoading] = useState(true)
-  const { cat } = useParams()
+
+
+const ItemListContainer = () => {
+  const [productos, guardarProductos] = useState([]);
+  const [estaCargando, guardarEstaCargando] = useState(true);
+  const { cid } = useParams();
 
   useEffect(() => {
-    if (!cat) {
-      mFetch()
-      .then( res=> { 
-        setProductos(res)
-    })
-        .catch( error => console.log(error) )
-        .finally(() => setIsLoading(false))
-    } else {
-      mFetch()
-      .then( resultado=> { 
-        setProductos(resultado.filter(productos => productos.category === cat ))
-    })
-    
-    .catch( error => console.log(error) )
-    .finally(()=> setIsLoading(false))
+    const dbFirestore = getFirestore();
+    const queryCollection = collection(dbFirestore, "productos");
 
-}
-}, [cat])
+    if (!cid) {
+      setTimeout(async () => {
+        getDocs(queryCollection)
+          .then((resp) =>
+            guardarProductos(
+              resp.docs.map((productos) => ({
+                id: productos.id,               
+                ...productos.data(),
+              })),
+              
+            )
+          )
+          .catch((err) => console.log(err))
+          .finally(() => guardarEstaCargando(false));
+      }, 2500);
+    } else {
+      const queryFiltrada = query(
+        queryCollection,
+        where("category", "==", cid)
+      );
+
+      getDocs(queryFiltrada)
+        .then((resp) =>
+          guardarProductos(
+            resp.docs.map((productos) => ({
+              id: productos.id,
+              ...productos.data(),
+            }))
+          )
+        )
+        .catch((err) => console.log(err))
+        .finally(() => guardarEstaCargando(false));
+      
+    }
+  }, [cid]);
+
 
 
 
   return (   
     <Container fluid className="Hero">
     <Row className="mt-5">
-      {isLoading ? (
+      {estaCargando ? (
         <div className="text-center display-5">Cargando...</div>
       ) : (
         <ItemList productos={productos} />
@@ -46,9 +68,6 @@ export function ItemListContainer() {
       
   )
 }
-
-
-
 
 
 export default ItemListContainer;

@@ -33,9 +33,9 @@ function Navbar() {
             <NavLink to='/categoria/2' className={ ({isActive})=> isActive ? 'btn btn-primary' : 'btn btn-outline-primary'}>Vinilos</NavLink>
             </li>
             <li className="nav-item">
-              <Link className="nav-link" to="#">
+             
                 <CartWidget />
-              </Link>
+              
             </li>
 
           </ul>

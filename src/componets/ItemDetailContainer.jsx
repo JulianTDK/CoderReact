@@ -1,27 +1,36 @@
-import React from "react";
-import { useState, useEffect } from "react";
-import ItemDetail from "./ItemDetail";
-import { useParams } from "react-router-dom";
-import { mFetch } from "./mFetch";
+import { useEffect, useState } from 'react'
+import { useParams, Link } from 'react-router-dom';
+import { FaHome } from 'react-icons/fa'
+import { getFirestore, doc, getDoc } from 'firebase/firestore'
+import ItemDetail from './ItemDetail'
 
-const ItemDetailContainer = () => {
-  const [productos, setProduct] = useState(null);
-  const { id } = useParams();
+export default function ItemDetailContainer() {
+    const [producto, setProducto] = useState({});
+    const [loading, setLoading] = useState(true)
+    const { pid } = useParams()
+    
+    useEffect(()=>{
+        const queryDb = getFirestore();
+        const queryDoc = doc(queryDb, 'productos', pid);
+        getDoc(queryDoc)
+        .then(res=>setProducto({id: res.id, ...res.data()}))
+        .finally(()=>{
+            setLoading(false)
+        })
+        },[pid])
+  
 
-  useEffect(() => {
-    const getProductsById = async (productId) => {
-      const res = await mFetch();
-      const productFind = res.find((productos) => productos.id === parseInt(productId));
-      setProduct(productFind);
-    };
-    getProductsById(id);
-  }, [id]);
+    return (
+        <>
+            {loading || !producto.title
+            ?   <div className='detail__warning'>
+                <h1>
+                    Cargando...
+                </h1>
 
-  return (
-    <div className="ItemDetailContainer">
-      <ItemDetail {...productos} />
-    </div>
-  );
-};
-
-export default ItemDetailContainer;
+                </div>
+            :   <ItemDetail producto={producto} />
+            }
+        </>
+    )
+}
