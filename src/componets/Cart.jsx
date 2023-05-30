@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { useCartContext } from '../Context/CartContext';
+import { useCartContext } from '../context/CartContext';
 import { FaArrowLeft, FaLeaf, FaTrash, FaBoxOpen, FaAngleRight } from 'react-icons/fa';
 import './Cart.css';
 export default function Cart() {

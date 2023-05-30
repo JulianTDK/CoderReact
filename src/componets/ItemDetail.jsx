@@ -2,7 +2,7 @@
 import ItemCount from './ItemCount';
 import { Link } from 'react-router-dom';
 import { FaLeaf, FaAngleLeft, FaAngleRight, FaCertificate } from 'react-icons/fa';
-import { useCartContext } from '../Context/CartContext';
+import { useCartContext } from '../context/CartContext';
 
 export default function ItemDetail({producto : {id,src,title,alt,description,price,stock}}) {
     const {addToCart, isInCart} = useCartContext()

@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { Link, Navigate } from 'react-router-dom';
 import { FaCheck, FaArrowLeft, FaLeaf } from 'react-icons/fa';
 import { getFirestore, collection, addDoc, serverTimestamp } from 'firebase/firestore';
-import { useCartContext } from '../Context/CartContext';
+import { useCartContext } from '../context/CartContext';
 import CheckoutInputs from './CheckoutInputs';
 import './Checkout.css';
 
