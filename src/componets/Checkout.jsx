@@ -24,7 +24,6 @@ export default function Checkout() {
             placeholder: 'Juan Almendra',
             errorMessage: "Tu nombre debe tener almenos 5 caracteres",
             label: 'Nombre completo',
-            pattern: ".{6,}",
             required: true
         },
         {
@@ -34,8 +33,8 @@ export default function Checkout() {
             placeholder: '000-000-0000',
             errorMessage: "Tu numero de telefono debe ser de 10 numeros en el formato : 000-000-0000.",
             label: 'Telefono',
-            pattern: "^(1s?)?((([0-9]{3}))|[0-9]{3})[s-]?[0-9]{3}[s-]?[0-9]{4}$",
-            required: true
+            
+            required: false
         },
         {
             id: 3,
@@ -72,9 +71,9 @@ export default function Checkout() {
             date: serverTimestamp()
         }
         const emailControl = new RegExp("^[a-zA-Z0-9._%+-]+@[a-z0-9.-]+.[a-z]{2,}$");
-        const phoneControl = new RegExp("^(1s?)?((([0-9]{3}))|[0-9]{3})[s-]?[0-9]{3}[s-]?[0-9]{4}$");
 
-        if(user.fullName.length <= 5 || !phoneControl.test(user.phone) || user.email !== user.emailRepeat || !emailControl.test(user.email) || cartList.length === 0) {
+
+        if(user.fullName.length <= 2  || user.email !== user.emailRepeat || !emailControl.test(user.email) || cartList.length === 0) {
             return false
         }
 
